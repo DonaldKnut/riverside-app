@@ -72,7 +72,7 @@ const VideoConference = () => {
           : "Video Conference Created Successfully",
         type: "success",
       });
-      navigate("/dashboard");
+      navigate("/my_meetings");
     }
   };
 

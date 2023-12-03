@@ -6,8 +6,12 @@ import { MdCancel } from "react-icons/md";
 
 const CreateMeetingButtons = ({
   createMeeting,
+  isEdit,
+  closeFlyout,
 }: {
   createMeeting: () => void;
+  isEdit?: boolean;
+  closeFlyout?: () => {};
 }) => {
   const navigate = useNavigate();
   return (
@@ -17,7 +21,7 @@ const CreateMeetingButtons = ({
           <EuiButton
             color="danger"
             fill
-            onClick={() => navigate("/dashboard")}
+            onClick={() => (isEdit ? closeFlyout!() : navigate("/dashboard"))}
             style={{ fontFamily: "inherit" }}
           >
             Cancel <MdCancel />
@@ -33,7 +37,7 @@ const CreateMeetingButtons = ({
             fill
             onClick={createMeeting}
           >
-            Submit <RiSendPlane2Fill />
+            {isEdit ? "Edit Meeting" : "Create Meeting"} <RiSendPlane2Fill />
           </EuiButton>
         </EuiFlexItem>
       </EuiFlexGroup>

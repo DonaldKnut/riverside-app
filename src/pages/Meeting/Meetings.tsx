@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import { MeetingType } from "../../utils/Types";
 import { meetingsRef } from "../../utils/FirebaseConfig";
 import { useAppSelector } from "../../app/hooks";
-import { getDocs } from "firebase/firestore";
+import { getDocs, query } from "firebase/firestore";
 import Header from "../../components/Header/Header";
 import { IoEnterSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -20,36 +20,38 @@ import {
   EuiBadge,
 } from "@elastic/eui";
 import moment from "moment";
-import EditFlyout from "../../components/EditFlyout/EditFlyout";
 
-const MyMeetings = () => {
+const Meetings = () => {
   useAuth();
   const [meetings, setMeetings] = useState<any>([]);
-  const [showEditFlyout, setShowEditFlyout] = useState(false);
-  const [editMeeting, setEditMeeting] = useState<MeetingType>();
   const userInfo = useAppSelector((riverside) => riverside.auth.userInfo);
-  const openEditFlyout = (meeting: MeetingType) => {
-    setShowEditFlyout(true);
-    setEditMeeting(meeting);
-  };
-  const closeEditFlyout = (dataChanged = false) => {
-    setShowEditFlyout(false);
-    setEditMeeting(undefined);
-    if (dataChanged) getMyMeetings();
-  };
-  const getMyMeetings = async () => {
-    const fetchedMeetings = await getDocs(meetingsRef);
-    if (fetchedMeetings.docs.length) {
-      const myMeetings = fetchedMeetings.docs.map((meeting) => ({
-        docId: meeting.id,
-        ...(meeting.data() as MeetingType),
-      }));
-      setMeetings(myMeetings);
-      console.log({ meetings: myMeetings });
-    }
-  };
+
   useEffect(() => {
-    getMyMeetings();
+    const getUserMeetings = async () => {
+      const firestoreQuery = query(meetingsRef);
+      const fetchedMeetings = await getDocs(firestoreQuery);
+      if (fetchedMeetings.docs.length) {
+        const myMeetings: Array<MeetingType> = [];
+        fetchedMeetings.forEach((meeting) => {
+          const data = meeting.data() as MeetingType;
+          if (data.createdBy === userInfo?.uid) {
+            myMeetings.push(data);
+          } else if (data.meetingType === "anyone-can-join") {
+            myMeetings.push(data);
+          } else {
+            const index = data.invitedUsers.findIndex(
+              (user) => user === userInfo?.uid
+            );
+            if (index !== -1) {
+              myMeetings.push(data);
+            }
+          }
+        });
+        setMeetings(myMeetings);
+        console.log({ meetings: myMeetings });
+      }
+    };
+    getUserMeetings();
   }, [userInfo]);
 
   const columns = [
@@ -141,27 +143,6 @@ const MyMeetings = () => {
       },
     },
     {
-      field: "",
-      name: "Edit",
-      render: (meeting: MeetingType) => {
-        return (
-          <EuiButtonIcon
-            aria-label="meeting-edit"
-            iconType="indexEdit"
-            color="danger"
-            display="base"
-            isDisabled={
-              !meeting.status ||
-              moment(meeting.meetingDate).isBefore(moment().format("L"))
-            }
-            onClick={() => {
-              openEditFlyout(meeting);
-            }}
-          />
-        );
-      },
-    },
-    {
       field: "meetingId",
       name: "Copy Link",
       render: (meetingId: string) => {
@@ -193,11 +174,8 @@ const MyMeetings = () => {
           </EuiPanel>
         </EuiFlexItem>
       </EuiFlexGroup>
-      {showEditFlyout && (
-        <EditFlyout closeFlyout={closeEditFlyout} meetings={editMeeting!} />
-      )}
     </div>
   );
 };
 
-export default MyMeetings;
+export default Meetings;

@@ -64,7 +64,7 @@ const OneOnOneMeeting = () => {
         title: "One on One Meeting Created Successfully",
         type: "success",
       });
-      navigate("/dashboard");
+      navigate("/my_meetings");
     }
   };
 

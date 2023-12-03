@@ -59,3 +59,31 @@ export const getVideoConferenceBreadCrumbs = (
     text: "Create Video Conference",
   },
 ];
+export const getMyMeetingsBreadCrumbs = (
+  navigate: NavigateFunction
+): Array<BreadCrumbsType> => [
+  {
+    text: "Dashboard",
+    href: "#",
+    onClick: () => {
+      navigate("/create");
+    },
+  },
+  {
+    text: "My Meetings",
+  },
+];
+export const getMeetingsBreadCrumbs = (
+  navigate: NavigateFunction
+): Array<BreadCrumbsType> => [
+  {
+    text: "Dashboard",
+    href: "#",
+    onClick: () => {
+      navigate("/create");
+    },
+  },
+  {
+    text: "Meetings",
+  },
+];

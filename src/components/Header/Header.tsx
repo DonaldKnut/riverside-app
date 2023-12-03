@@ -16,6 +16,8 @@ import { auth } from "../../utils/FirebaseConfig";
 import { changeTheme } from "../../app/slices/AuthSlice";
 import {
   getCreatedMeetingBreadCrumbs,
+  getMeetingsBreadCrumbs,
+  getMyMeetingsBreadCrumbs,
   getVideoConferenceBreadCrumbs,
 } from "../../utils/breadCrumbs";
 import { getOneonOneBreadCrumbs } from "../../utils/breadCrumbs";
@@ -47,6 +49,10 @@ const Header = () => {
       setBreadCrumbs(getOneonOneBreadCrumbs(navigate));
     } else if (pathname === "/createvideoconference") {
       setBreadCrumbs(getVideoConferenceBreadCrumbs(navigate));
+    } else if (pathname === "/my_meetings") {
+      setBreadCrumbs(getMyMeetingsBreadCrumbs(navigate));
+    } else if (pathname === "/meetings") {
+      setBreadCrumbs(getMeetingsBreadCrumbs(navigate));
     }
   }, [location, navigate]);
 

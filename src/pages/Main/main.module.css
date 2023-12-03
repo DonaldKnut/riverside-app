@@ -46,7 +46,7 @@
   text-decoration: none;
   width: 233px;
   cursor: pointer;
-  border: 1.4px solid #66563b;
+  border: 1.4px solid #c2bcb1;
   color: #8b7236;
   top: -15px;
   overflow: hidden;
@@ -57,6 +57,7 @@
 .button:hover {
   color: #fff;
   background: linear-gradient(234deg, #e00d0d33 0%, #a75a02 100%);
+  border: 1.4px solid #83704d;
 }
 
 .hero_image {

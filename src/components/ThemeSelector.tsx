@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from "react";
-import { EuiProvider, EuiThemeColorMode, EuiThemeProvider } from "@elastic/eui";
+import { EuiThemeColorMode } from "@elastic/eui";
 
 const LightTheme = React.lazy(() => import("./Themes/LightTheme"));
 const DarkTheme = React.lazy(() => import("./Themes/DarkTheme"));

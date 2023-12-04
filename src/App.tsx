@@ -35,14 +35,14 @@ const App = () => {
     } else {
       localStorage.setItem("zoom-theme", "light");
     }
-  }, [isInitialTheme]);
+  }, []);
 
   useEffect(() => {
     if (isInitialTheme) setIsInitialTheme(false);
     else {
       window.location.reload();
     }
-  }, [isDarkTheme]);
+  }, [isDarkTheme, isInitialTheme]);
 
   const overrides = {
     colors: {

@@ -1,7 +1,7 @@
 import React from "react";
 import images from "../../assets/images";
 import { FaGoogle } from "react-icons/fa";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import { addDoc, getDocs, query, where } from "firebase/firestore";
 import { useAppDispatch } from "../../app/hooks";
 import { setUser } from "../../app/slices/AuthSlice";
 import "./Login.css";
@@ -23,7 +23,6 @@ import {
 } from "firebase/auth";
 import { auth, userRef } from "../../utils/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
-import { fireEvent } from "@testing-library/react";
 
 const Login = () => {
   const navigate = useNavigate();

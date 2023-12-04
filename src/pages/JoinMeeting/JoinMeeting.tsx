@@ -41,15 +41,15 @@ const JoinMeeting = () => {
                 moment(meeting.meetingDate).isBefore(moment().format("L"))
               ) {
                 createToast({ title: "Meeting has Ended.", type: "danger" });
-                navigate(user ? "/dashboard" : "/create");
+                navigate(user ? "/dashboard" : "/login");
               } else if (moment(meeting.meetingDate).isAfter()) {
                 createToast({
                   title: `Meeting is on ${meeting.meetingDate}`,
                   type: "warning",
                 });
-                navigate(user ? "/dashboard" : "/create");
+                navigate(user ? "/dashboard" : "/login");
               } else {
-                navigate(user ? "/dashboard" : "/create");
+                navigate(user ? "/dashboard" : "/login");
               }
             } else if (meeting.meetingType === "video-conference") {
               const index = meeting.invitedUsers.findIndex(
@@ -65,7 +65,7 @@ const JoinMeeting = () => {
                     title: `Meeting has Ended.`,
                     type: "danger",
                   });
-                  navigate(user ? "/dashboard" : "/create");
+                  navigate(user ? "/dashboard" : "/login");
                 } else if (moment(meeting.meetingDate).isAfter()) {
                   createToast({
                     title: `Meeting is on ${meeting.meetingDate}`,
@@ -76,7 +76,7 @@ const JoinMeeting = () => {
                     title: `You are not invited to this meeting`,
                     type: "danger",
                   });
-                  navigate(user ? "/" : "/create");
+                  navigate(user ? "/" : "/login");
                 }
               }
             } else {

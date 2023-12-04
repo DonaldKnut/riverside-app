@@ -8,7 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import ThemeSelector from "./components/ThemeSelector";
 import { setToasts } from "./app/slices/MeetingSlice";
-// import Login from "./pages/Login/Login";
+import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotFound from "./pages/NotFound/NotFound";
 import CreateMeeting from "./pages/CreateMeeting/CreateMeeting";
@@ -59,7 +59,7 @@ const App = () => {
         <EuiProvider colorMode={isDarkTheme ? "dark" : "light"}>
           <EuiThemeProvider modify={themeOverrides}>
             <Routes>
-              {/* <Route path="/login" element={<Login />} /> */}
+              <Route path="/login" element={<Login />} />
               <Route path="/create" element={<CreateMeeting />} />
               <Route path="/create1on1" element={<OneOnOneMeeting />} />
               <Route

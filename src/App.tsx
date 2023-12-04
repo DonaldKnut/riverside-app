@@ -1,21 +1,19 @@
-// import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   EuiGlobalToastList,
   EuiProvider,
-  EuiThemeColorMode,
   EuiThemeProvider,
 } from "@elastic/eui";
 import { Routes, Route } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
+import ThemeSelector from "./components/ThemeSelector";
+import { setToasts } from "./app/slices/MeetingSlice";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotFound from "./pages/NotFound/NotFound";
-import { useAppDispatch, useAppSelector } from "./app/hooks";
-import { useEffect, useState } from "react";
-import ThemeSelector from "./components/ThemeSelector";
 import CreateMeeting from "./pages/CreateMeeting/CreateMeeting";
 import Main from "./pages/Main/Main";
 import OneOnOneMeeting from "./pages/OneOnOneMeeting/OneOnOneMeeting";
-import { setToasts } from "./app/slices/MeetingSlice";
 import VideoConference from "./pages/VideoConference/VideoConference";
 import MyMeetings from "./pages/MyMeetings/MyMeetings";
 import Meetings from "./pages/Meeting/Meetings";
@@ -23,33 +21,30 @@ import JoinMeeting from "./pages/JoinMeeting/JoinMeeting";
 
 const App = () => {
   const dispatch = useAppDispatch();
-
   const isDarkTheme = useAppSelector((riverside) => riverside.auth.isDarkTheme);
-  const [theme, setTheme] = useState<EuiThemeColorMode>("light");
-  const [isInitialTheme, setIsInitialTheme] = useState(true);
-  const toasts = useAppSelector((riverside) => riverside.meetings.toasts);
-  useEffect(() => {
-    const theme = localStorage.getItem("zoom-theme");
-    if (theme) {
-      setTheme(theme as EuiThemeColorMode);
-    } else {
-      localStorage.setItem("zoom-theme", "light");
-    }
-  }, []);
+
+  const isInitialThemeRef = useRef(true);
 
   useEffect(() => {
-    if (isInitialTheme) setIsInitialTheme(false);
-    else {
+    if (!isInitialThemeRef.current) {
       window.location.reload();
     }
-  }, [isDarkTheme, isInitialTheme]);
+  }, [isDarkTheme]);
 
-  const overrides = {
+  useEffect(() => {
+    if (isInitialThemeRef.current) {
+      isInitialThemeRef.current = false;
+    }
+  }, [isDarkTheme]);
+
+  const themeOverrides = {
     colors: {
       LIGHT: { primary: "#e84878" },
       DARK: { primary: "#000" },
     },
   };
+
+  const toasts = useAppSelector((riverside) => riverside.meetings.toasts);
   const removeToast = (removeToast: { id: string }) => {
     dispatch(
       setToasts(
@@ -57,11 +52,12 @@ const App = () => {
       )
     );
   };
+
   return (
     <>
       <ThemeSelector>
-        <EuiProvider colorMode={theme}>
-          <EuiThemeProvider modify={overrides}>
+        <EuiProvider colorMode={isDarkTheme ? "dark" : "light"}>
+          <EuiThemeProvider modify={themeOverrides}>
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/create" element={<CreateMeeting />} />

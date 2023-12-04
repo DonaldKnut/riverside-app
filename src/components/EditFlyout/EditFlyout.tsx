@@ -40,7 +40,7 @@ const EditFlyout = ({
   const [startDate, setStartDate] = useState(moment(meetings.meetingDate));
   const [size, setSize] = useState(1);
   const [status, setStatus] = useState(false);
-  const [showErrors, setShowErrors] = useState<{
+  const [showErrors] = useState<{
     meetingName: FieldErrorType;
     meetingUser: FieldErrorType;
   }>({

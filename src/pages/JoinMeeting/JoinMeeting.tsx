@@ -89,7 +89,7 @@ const JoinMeeting = () => {
       }
     };
     getMeetingData();
-  }, [userLoaded]);
+  }, [userLoaded, createToast, navigate, params.id, user]);
 
   const appId = 1555844265;
   const serverSecret = "b3cf502b83e1ec351ea647020139faef";

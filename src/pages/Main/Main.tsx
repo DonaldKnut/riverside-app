@@ -34,7 +34,7 @@ const Main: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate("/login");
+    navigate("/dashboard");
   };
 
   return (

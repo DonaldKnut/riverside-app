@@ -34,7 +34,7 @@ const Main: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate("/login");
+    navigate("/dashboard");
   };
 
   return (
@@ -54,7 +54,7 @@ const Main: React.FC = () => {
           className={styles.hero_image}
         />
 
-        <Link to="/login" onClick={handleLoginClick}>
+        <Link to="/dashboard" onClick={handleLoginClick}>
           <button
             className={styles.button}
             style={{

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./main.module.css";
 import { Link } from "react-router-dom";
 import images from "../../assets/images";
 import { LuClapperboard } from "react-icons/lu";
+import { loginWithGitHub } from "./loginWithGitHub";
 
 interface TypewriterProps {
   text: string;
@@ -31,10 +31,10 @@ const Typewriter: React.FC<TypewriterProps> = ({ text }) => {
 };
 
 const Main: React.FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate("/dashboard");
+    loginWithGitHub();
   };
 
   return (

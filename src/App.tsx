@@ -35,7 +35,7 @@ const App = () => {
     } else {
       localStorage.setItem("zoom-theme", "light");
     }
-  }, [isInitialTheme]);
+  }, []);
 
   useEffect(() => {
     if (isInitialTheme) setIsInitialTheme(false);
